@@ -36,7 +36,13 @@ export default function SynthEngine() {
         </Track>
       </Song>
 
-      <Stack spacing={2} direction='row' sx={{mb: 1}} alignItems="center" className="CenterAlign" >
+      <Stack
+        spacing={2}
+        direction="row"
+        sx={{ mb: 1 }}
+        alignItems="center"
+        className="CenterAlign"
+      >
         <Donut
           diameter={60}
           min={-50}
@@ -44,13 +50,43 @@ export default function SynthEngine() {
           step={1}
           value={volume}
           theme={{
-            donutColor: 'blue',
-            donutThickness: 14
+            donutColor: "blue",
+            donutThickness: 7,
           }}
           onValueChange={setVolume}
-          ariaLabelledBy={'volume'}
+          ariaLabelledBy={"volume"}
         >
-          <label id={'volume'}>Volume</label>
+          <label id={"volume"}>Volume</label>
+        </Donut>
+        <Donut
+          diameter={60}
+          min={0}
+          max={1}
+          step={0.25}
+          value={delayAmount}
+          theme={{
+            donutColor: "purple",
+            donutThickness: 7,
+          }}
+          onValueChange={setDelayAmount}
+          ariaLabelledBy={"delay-amount"}
+        >
+          <label id={"delay-amount"}>Delay</label>
+        </Donut>
+        <Donut
+          diameter={60}
+          min={0}
+          max={1}
+          step={0.25}
+          value={distortionAmount}
+          theme={{
+            donutColor: "purple",
+            donutThickness: 7,
+          }}
+          onValueChange={setDistortionAmount}
+          ariaLabelledBy={"delay-amount"}
+        >
+          <label id={"delay-amount"}>Distortion</label>
         </Donut>
       </Stack>
     </div>
