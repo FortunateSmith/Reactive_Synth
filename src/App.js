@@ -1,49 +1,21 @@
 import React from 'react';
-import { Song, Track, Instrument } from 'reactronica';
-import logo from './logo.svg';
 import './App.css';
+import SynthEngine from './SynthEngine';
+import Footer from './Footer';
 
-function App() {
-  const [isPlaying, setIsPlaying] = React.useState(false);
+
+export default function App() {
+  
 
   return (
     <div className="App">
-      <Song isPlaying={isPlaying}>
-        <Track steps={['C3', 'E3', 'G3', null]}>
-          <Instrument type="synth" />
-        </Track>
-      </Song>
-
-      <header className="App-header">
-        <button
-          style={{
-            fontSize: '2rem',
-          }}
-          onClick={() => {
-            setIsPlaying(!isPlaying);
-          }}
-        >
-          {isPlaying ? 'Stop sound' : 'Play sound'}
-        </button>
-
-        <br />
-
-        <img src={logo} className="App-logo" alt="logo" />
-
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header className='App-header'>
+        <h1>Reactive Synth</h1>
+        <h2>A Polyphonic JavaScript Sythesizer</h2>
       </header>
+      <SynthEngine/>
+      <Footer/>
     </div>
   );
 }
 
-export default App;
