@@ -46,7 +46,7 @@ export default function SynthEngine() {
         <Donut
           diameter={60}
           min={-50}
-          max={10}
+          max={20}
           step={1}
           value={volume}
           theme={{
@@ -88,6 +88,48 @@ export default function SynthEngine() {
         >
           <label id={"delay-amount"}>Distortion</label>
         </Donut>
+      </Stack>
+
+      <br />
+      <br />
+
+      <Stack alignItems="center" className="CenterAlign">
+        <FormControl component="fieldset">
+          <FormLabel components="legend">Synth Engine</FormLabel>
+          <RadioGroup
+            aria-label="synth-engine"
+            defaultValue="amSynth"
+            name="radio-buttons-group"
+          >
+            <FormControlLabel
+              value="amSynth"
+              control={<Radio onClick={() => setSynthType("amSynth")} />}
+              label="amSynth"
+            />
+            <FormControlLabel
+              value="fmSynth"
+              control={<Radio onClick={() => setSynthType("fmSynth")} />}
+              label="fmSynth"
+            />
+            <FormControlLabel
+              value="monoSynth"
+              control={<Radio onClick={() => setSynthType("monoSynth")} />}
+              label="monoSynth"
+            />
+          </RadioGroup>
+        </FormControl>
+        <br />
+        <br />
+        <button
+          onClick={() => {
+            setIsPlaying(!isPlaying);
+          }}
+        >
+          {isPlaying ? "Stop" : "Play"}
+        </button>
+        <br />
+        <br />
+        <br />
       </Stack>
     </div>
   );
