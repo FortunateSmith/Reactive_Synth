@@ -13,26 +13,33 @@ export default function SynthEngine() {
   const [volume, setVolume] = useState(0);
   const [delayAmount, setDelayAmount] = useState(0);
   const [distortionAmount, setDistortionAmount] = useState(0);
+  const [tremoloAmount, setTremoloAmount] = useState(0);
   const [steps] = useState([
-    ["C3", "E3", "A3"],
-    null,
-    ["C3", "E3", "G3", "B3"],
-    null,
-    ["C3", "F3", "A3"],
-    null,
-    ["D3", "G3", "B3"],
-    null,
+    "E3", null, null, "G3", null, "B3", null, null, null, null, "G3", null, "D3", null, null, null,"E3", "D3", null, "G3", null, "C3", null, null, "C3", null, "G3", null, "D3", null, null, null,
   ]);
   const [synthType, setSynthType] = useState("amSynth");
+  const [wahAmount, setWahAmount] = useState(0);
+  const envelope = {
+    attack: 0.2,
+    decay: 0.2,
+    release: 0.5,
+    sustain: 0
+  };
+  const [sustainAmount, setSustain] = useState(0);
+
+  
 
   return (
     <div>
-      <Song isPlaying={isPlaying}>
+      <Song isPlaying={isPlaying} bpm={250}>
         <Track steps={steps} volume={volume}>
-          <Instrument type={synthType} />
+          <Instrument type={synthType} sustain={sustainAmount} />
           {/* setup effects chain */}
-          <Effect type="distorion" wet={distortionAmount} />
+          <Effect type="autoWah" wet={wahAmount} />
+          <Effect type="distortion" wet={distortionAmount} />
           <Effect type="feedbackDelay" wet={delayAmount} />
+          <Effect type="tremolo" wet={tremoloAmount} />
+          {/* <Effect type="sustain" wet={sustainAmount} /> */}
         </Track>
       </Song>
 
@@ -57,6 +64,21 @@ export default function SynthEngine() {
           ariaLabelledBy={"volume"}
         >
           <label id={"volume"}>Volume</label>
+        </Donut>
+        <Donut
+          diameter={60}
+          min={0}
+          max={1}
+          step={0.25}
+          value={wahAmount}
+          theme={{
+            donutColor: "orange",
+            donutThickness: 7,
+          }}
+          onValueChange={setWahAmount}
+          ariaLabelledBy={"delay-amount"}
+        >
+          <label id={"delay-amount"}>AutoWah</label>
         </Donut>
         <Donut
           diameter={60}
@@ -88,10 +110,48 @@ export default function SynthEngine() {
         >
           <label id={"delay-amount"}>Distortion</label>
         </Donut>
+        <Donut
+          diameter={60}
+          min={0}
+          max={1}
+          step={0.25}
+          value={tremoloAmount}
+          theme={{
+            donutColor: "aqua",
+            donutThickness: 7,
+          }}
+          onValueChange={setTremoloAmount}
+          ariaLabelledBy={"delay-amount"}
+          >
+            <label id={"delay-amount"}>Tremolo</label>
+          </Donut>
       </Stack>
+      <Stack
+        spacing={2}
+        direction="row"
+        sx={{ mb: 1 }}
+        alignItems="center"
+        className="CenterAlign"
+      >
+        <Donut
+          diameter={60}
+          min={0}
+          max={1}
+          step={0.25}
+          value={sustainAmount}
+          theme={{
+            donutColor: "blue",
+            donutThickness: 7,
+          }}
+          onValueChange={setSustain}
+          ariaLabelledBy={"volume"}
+        >
+          <label id={"volume"}>Sustain</label>
+        </Donut>
+        </Stack>
+      <br />
+      <br />
 
-      <br />
-      <br />
 
       <Stack alignItems="center" className="CenterAlign">
         <FormControl component="fieldset">
@@ -112,9 +172,9 @@ export default function SynthEngine() {
               label="fmSynth"
             />
             <FormControlLabel
-              value="monoSynth"
-              control={<Radio onClick={() => setSynthType("monoSynth")} />}
-              label="monoSynth"
+              value="membraneSynth"
+              control={<Radio onClick={() => setSynthType("membraneSynth")} />}
+              label="membraneSynth"
             />
           </RadioGroup>
         </FormControl>
@@ -131,6 +191,7 @@ export default function SynthEngine() {
         <br />
         <br />
       </Stack>
+      
     </div>
   );
 }
