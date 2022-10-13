@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Song, Track, Instrument, Effect } from "reactronica";
-import { Donut } from "react-dial-knob";
+import { Silver } from "react-dial-knob";
 import Stack from "@mui/material/Stack";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
@@ -15,7 +15,7 @@ export default function SynthEngine() {
   const [distortionAmount, setDistortionAmount] = useState(0);
   const [tremoloAmount, setTremoloAmount] = useState(0);
   const [steps] = useState([
-    "E3", null, null, "G3", null, "B3", null, null, null, null, "G3", null, "D3", null, null, null,"E3", "D3", null, "G3", null, "C3", null, null, "C3", null, "G3", null, "D3", null, null, null,
+    "E3", null, null, "G3", null, "B3", null, null, null, null, "G3", null, "D3", null, null, null,"E3", "D3", null, "G3", null, "C3", null, null, "C3", null, "G3", null, "D3", null, null, null, ["E3", "G3"], null, null, "G3", null, "B3", null, null, null, null, "G3", null, "D3", null, null, "E3", null, ["D3", "B4"], "A4", ["G3", "C4"], null, "C3", "A4", null, "C3", null, "G3", null, "D3", null, null, null,
   ]);
   const [synthType, setSynthType] = useState("amSynth");
   const [wahAmount, setWahAmount] = useState(0);
@@ -50,8 +50,8 @@ export default function SynthEngine() {
         alignItems="center"
         className="CenterAlign"
       >
-        <Donut
-          diameter={60}
+        <Silver
+          diameter={100}
           min={-50}
           max={20}
           step={1}
@@ -64,12 +64,12 @@ export default function SynthEngine() {
           ariaLabelledBy={"volume"}
         >
           <label id={"volume"}>Volume</label>
-        </Donut>
-        <Donut
-          diameter={60}
+        </Silver>
+        <Silver
+          diameter={100}
           min={0}
-          max={1}
-          step={0.25}
+          max={12}
+          step={1}
           value={wahAmount}
           theme={{
             donutColor: "orange",
@@ -79,12 +79,12 @@ export default function SynthEngine() {
           ariaLabelledBy={"delay-amount"}
         >
           <label id={"delay-amount"}>AutoWah</label>
-        </Donut>
-        <Donut
-          diameter={60}
+        </Silver>
+        <Silver
+          diameter={100}
           min={0}
-          max={1}
-          step={0.25}
+          max={12}
+          step={1}
           value={delayAmount}
           theme={{
             donutColor: "purple",
@@ -94,12 +94,12 @@ export default function SynthEngine() {
           ariaLabelledBy={"delay-amount"}
         >
           <label id={"delay-amount"}>Delay</label>
-        </Donut>
-        <Donut
-          diameter={60}
+        </Silver>
+        <Silver
+          diameter={100}
           min={0}
           max={1}
-          step={0.25}
+          step={0.125}
           value={distortionAmount}
           theme={{
             donutColor: "purple",
@@ -109,12 +109,12 @@ export default function SynthEngine() {
           ariaLabelledBy={"delay-amount"}
         >
           <label id={"delay-amount"}>Distortion</label>
-        </Donut>
-        <Donut
-          diameter={60}
+        </Silver>
+        <Silver
+          diameter={100}
           min={0}
-          max={1}
-          step={0.25}
+          max={12}
+          step={1}
           value={tremoloAmount}
           theme={{
             donutColor: "aqua",
@@ -124,7 +124,7 @@ export default function SynthEngine() {
           ariaLabelledBy={"delay-amount"}
           >
             <label id={"delay-amount"}>Tremolo</label>
-          </Donut>
+          </Silver>
       </Stack>
       <Stack
         spacing={2}
@@ -133,11 +133,11 @@ export default function SynthEngine() {
         alignItems="center"
         className="CenterAlign"
       >
-        <Donut
-          diameter={60}
+        <Silver
+          diameter={100}
           min={0}
-          max={1}
-          step={0.25}
+          max={12}
+          step={1}
           value={sustainAmount}
           theme={{
             donutColor: "blue",
@@ -147,7 +147,7 @@ export default function SynthEngine() {
           ariaLabelledBy={"volume"}
         >
           <label id={"volume"}>Sustain</label>
-        </Donut>
+        </Silver>
         </Stack>
       <br />
       <br />
