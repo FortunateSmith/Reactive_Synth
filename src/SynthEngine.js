@@ -176,6 +176,11 @@ export default function SynthEngine() {
               control={<Radio onClick={() => setSynthType("membraneSynth")} />}
               label="membraneSynth"
             />
+            <FormControlLabel
+              value="synth"
+              control={<Radio onClick={() => setSynthType("synth")} />}
+              label="synth"
+              />
           </RadioGroup>
         </FormControl>
         <br />
