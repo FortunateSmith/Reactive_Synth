@@ -1,0 +1,20 @@
+.container {
+  background-color: #000;
+  color: #fff;
+}
+
+#delay {
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+  width: 90%;
+}
+
+.effect-param {
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.effect-param-input {
+  width: 90%;
+}
