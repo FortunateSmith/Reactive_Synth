@@ -259,11 +259,13 @@ export default function SynthEngine() {
               </div>
         </fieldset>
       </Stack>
-
+      
       <Stack alignItems="center" className="CenterAlign">
         <FormControl component="fieldset">
           <FormLabel components="legend">Synth Engine</FormLabel>
+          <div class="radio-group">
           <RadioGroup
+            className="generator"
             aria-label="synth-engine"
             defaultValue="amSynth"
             name="radio-buttons-group"
@@ -289,6 +291,7 @@ export default function SynthEngine() {
               label="synth"
             />
           </RadioGroup>
+          </div>
         </FormControl>
         <br />
         <br />
