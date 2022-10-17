@@ -18,3 +18,8 @@
 .effect-param-input {
   width: 90%;
 }
+
+.radio-group {
+  display: flex;
+}
+
