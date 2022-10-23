@@ -2,17 +2,6 @@
   text-align: center;
 }
 
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-} */
-  /* .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  } */
-
 .App-header {
   background-color: #ff67ed;
   min-height: 30vh;
@@ -48,18 +37,13 @@ div #box {
   display: flex;
   align-items: center;
   box-sizing: border-box;
-  
 }
-
-
-
-
 
 #burst-12 {
   background: rgb(47, 13, 52);
   width: 80px;
   height: 80px;
-  position: fixed;
+  position: relative;
   text-align: center;
   animation: rescale 1.5s infinite;
   border-radius: 32px;
@@ -85,16 +69,38 @@ div #box {
   background-color: #61dafb;
 }
 
-@keyframes rescale{
-  0% {transform:rotate(0deg);}
-  10% {transform:rotate(36deg);}
-  20% {transform:rotate(72deg);}
-  30% {transform:rotate(108deg);}
-  40% {transform:rotate(144deg);}
-  50% {transform:rotate(180deg);}
-  60% {transform:rotate(216deg);}
-  70% {transform:rotate(252deg);}
-  80% {transform:rotate(288deg);}
-  90% {transform:rotate(334deg);}
-  100% {transform:rotate(360deg);}
+@keyframes rescale {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(36deg);
+  }
+  20% {
+    transform: rotate(72deg);
+  }
+  30% {
+    transform: rotate(108deg);
+  }
+  40% {
+    transform: rotate(144deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  60% {
+    transform: rotate(216deg);
+  }
+  70% {
+    transform: rotate(252deg);
+  }
+  80% {
+    transform: rotate(288deg);
+  }
+  90% {
+    transform: rotate(334deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }

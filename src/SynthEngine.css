@@ -3,7 +3,7 @@
   color: #fff;
 }
 
-#delay {
+#effect {
   display: flex;
   flex-direction: column;
   border-radius: 25px;
@@ -23,3 +23,14 @@
   display: flex;
 }
 
+#engine {
+  font-size: 20px;
+  font-style: oblique;
+  color:antiquewhite;
+}
+
+#delay-head {
+  font-style: oblique;
+  font-weight: 300;
+  color:antiquewhite;
+}

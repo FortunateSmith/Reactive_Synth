@@ -12,9 +12,9 @@ import "./SynthEngine.css";
 export default function SynthEngine() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(-10);
-  const [delay, setDelay] = useState({ time: 1, feedback: 0.5, mix: 0.5 });
+  const [delay, setDelay] = useState({ time: 0, feedback: 0, mix: 0 });
   const [distortionAmount, setDistortionAmount] = useState(0);
-  const [tremoloAmount, setTremoloAmount] = useState(0);
+  const [tremoloAmount, setTremoloAmount] = useState({mix: 0});
   const [steps] = useState([
     "E3",
     null,
@@ -84,21 +84,6 @@ export default function SynthEngine() {
   const [synthType, setSynthType] = useState("amSynth");
   const [wahAmount, setWahAmount] = useState(0);
 
-  // set delay mix
-  const changeDelayMix = (e) => {
-    setDelay({ ...delay, mix: e.target.value });
-    return delay.mix;
-  };
-
-  // const getDMixVal = () => {
-  //   let arr = Object.values(delay);
-  //   const popped = arr.pop()
-
-  //   console.log("DMixVal.arr.pop", popped)
-  //   return popped
-  // }
-
-  // getDMixVal()
   return (
     <div>
     <div class="container">
@@ -106,15 +91,14 @@ export default function SynthEngine() {
         <Track steps={steps} volume={volume}>
           <Instrument
             type={synthType}
-            envelope={{ attack: 0.1, decay: 0.1, release: 0.1, sustain: 0.9 }}
-            // log={console.log("within Instrument", envelope)}
+            // envelope={{ attack: 0.1, decay: 0.1, release: 0.1, sustain: 0.9 }}
           />
           {/* setup effects chain */}
           <Effect type="autoWah" wet={wahAmount} />
           <Effect type="distortion" wet={distortionAmount} />
-          <Effect type="feedbackDelay" wet={delay.mix} />
-          <Effect type="tremolo" wet={tremoloAmount} />
-          {/* <Effect type="sustain" wet={sustainAmount} /> */}
+          <Effect type="feedbackDelay" wet={delay.mix} time={delay.time} feedback={delay.feedback}/>
+          <Effect type="tremolo" wet={tremoloAmount.mix} />
+
         </Track>
       </Song>
 
@@ -170,7 +154,16 @@ export default function SynthEngine() {
         >
           <label id={"delay-amount"}>Distortion</label>
         </Silver>
-        <Silver
+        </Stack>
+
+        <Stack
+        spacing={2}
+        direction="row"
+        sx={{ mb: 2 }}
+        alignItems="center"
+        className="CenterAlign"
+      >
+        {/* <Silver
           diameter={100}
           min={0}
           max={12}
@@ -184,8 +177,74 @@ export default function SynthEngine() {
           ariaLabelledBy={"delay-amount"}
         >
           <label id={"delay-amount"}>Tremolo</label>
-        </Silver>
-      </Stack>
+        </Silver> */}
+
+<fieldset id="effect" name="tremolo" className="params">
+          <h2 htmlFor="tremolo" id="tremolo-head">Tremolo</h2>
+          <label htmlFor="tremolo-mix">MIX</label>
+          <div class='effect-param'>
+          <input
+            class='effect-param-input'
+            id="tremolo-mix"
+            name="tremolo-mix"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            onChange={(e) =>
+              setTremoloAmount({
+                ...tremoloAmount,
+                mix: e.target.value,
+              })
+            }
+            value={tremoloAmount.mix}
+          />
+          <p>{Math.floor(tremoloAmount.mix * 100)}</p>
+          </div>
+          {/* <label htmlFor="delay-feedback">FEEDBACK</label>
+          <div class="effect-param">
+          <input
+            class='effect-param-input'
+            id="delay-feedback"
+            name="delay-feedback"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            onChange={(e) =>
+              setDelay({
+                ...delay,
+                feedback: e.target.value,
+              })
+            }
+            value={delay.feedback}
+          />
+          <p>{Math.floor(delay.feedback * 100)}</p>
+          </div>
+              <label htmlFor="delay-time">TIME</label>
+              <div class='effect-param'>
+              <input
+              class='effect-param-input'
+                id="delay-time"
+                name="delay-time"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                onChange={(e) =>
+                  setDelay({
+                    ...delay,
+                    time: e.target.value,
+                  })
+                }
+                value={delay.time}
+              />
+              <p>{Math.floor(delay.time * 100)}</p>
+              </div> */}
+              
+        </fieldset>
+
+          </Stack>
       <br />
       <br />
       <Stack
@@ -195,8 +254,8 @@ export default function SynthEngine() {
         alignItems="center"
         className="CenterAlign"
       >
-        <fieldset id="delay" name="delay" className="params">
-          <h2 htmlFor="delay">Delay</h2>
+        <fieldset id="effect" name="delay" className="params">
+          <h2 htmlFor="delay" id="delay-head">Delay</h2>
           <label htmlFor="delay-mix">MIX</label>
           <div class='effect-param'>
           <input
@@ -246,7 +305,7 @@ export default function SynthEngine() {
                 type="range"
                 min="0"
                 max="1"
-                step="0.1"
+                step="0.01"
                 onChange={(e) =>
                   setDelay({
                     ...delay,
@@ -255,14 +314,17 @@ export default function SynthEngine() {
                 }
                 value={delay.time}
               />
-              <p>{Math.floor(delay.time * 10)}</p>
+              <p>{Math.floor(delay.time * 100)}</p>
               </div>
+              
         </fieldset>
       </Stack>
       
       <Stack alignItems="center" className="CenterAlign">
         <FormControl component="fieldset">
-          <FormLabel components="legend">Synth Engine</FormLabel>
+
+          <FormLabel components="legend" id="engine">Synth Engine</FormLabel>
+
           <div class="radio-group">
           <RadioGroup
             className="generator"
