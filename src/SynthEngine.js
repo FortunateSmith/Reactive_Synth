@@ -12,7 +12,7 @@ import "./SynthEngine.css";
 export default function SynthEngine() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(-10);
-  const [delay, setDelay] = useState({ time: 0, feedback: 0, mix: 0 });
+  const [delay, setDelay] = useState({ rate: 0, feedback: 0, mix: 0 });
   const [distortionAmount, setDistortionAmount] = useState(0);
   const [tremoloAmount, setTremoloAmount] = useState({ mix: 0, depth: 0 });
   const [steps] = useState([
@@ -84,6 +84,10 @@ export default function SynthEngine() {
   const [synthType, setSynthType] = useState("amSynth");
   const [wahAmount, setWahAmount] = useState(0);
 
+ function setDelayRate(){
+
+  }
+
   return (
     <div>
       <div class="container">
@@ -99,12 +103,63 @@ export default function SynthEngine() {
             <Effect
               type="feedbackDelay"
               wet={delay.mix}
-              time={delay.time}
+              rate={delay.rate}
               feedback={delay.feedback}
             />
             <Effect type="tremolo" wet={tremoloAmount.mix} depth={tremoloAmount.depth} />
           </Track>
         </Song>
+        <Stack alignItems="center" className="CenterAlign" id="synthEngineBlock" >
+          <FormControl component="fieldset" >
+            <FormLabel components="legend" id="engine">
+              Synth Engine
+            </FormLabel>
+
+            <div class="radio-group" id="synth-engine">
+              <RadioGroup
+                className="generator"
+                aria-label="synth-engine"
+                defaultValue="amSynth"
+                name="radio-buttons-group"
+              >
+                <FormControlLabel
+                  value="amSynth"
+                  control={<Radio onClick={() => setSynthType("amSynth")} />}
+                  label="amSynth"
+                />
+                <FormControlLabel
+                  value="fmSynth"
+                  control={<Radio onClick={() => setSynthType("fmSynth")} />}
+                  label="fmSynth"
+                />
+                <FormControlLabel
+                  value="membraneSynth"
+                  control={
+                    <Radio onClick={() => setSynthType("membraneSynth")} />
+                  }
+                  label="membraneSynth"
+                />
+                <FormControlLabel
+                  value="synth"
+                  control={<Radio onClick={() => setSynthType("synth")} />}
+                  label="synth"
+                />
+              </RadioGroup>
+            </div>
+          </FormControl>
+          <br />
+          <br />
+          <button
+            onClick={() => {
+              setIsPlaying(!isPlaying);
+            }}
+          >
+            {isPlaying ? "Stop" : "Play"}
+          </button>
+          <br />
+          <br />
+          <br />
+        </Stack>
 
         <Stack
           spacing={2}
@@ -160,6 +215,8 @@ export default function SynthEngine() {
           </Silver>
         </Stack>
 
+
+        {/* TremoloSection */}
         <Stack
           spacing={2}
           direction="row"
@@ -211,50 +268,12 @@ export default function SynthEngine() {
               />
               <p>{Math.floor(tremoloAmount.depth * 100)}</p>
             </div>
-            {/* <label htmlFor="delay-feedback">FEEDBACK</label>
-          <div class="effect-param">
-          <input
-            class='effect-param-input'
-            id="delay-feedback"
-            name="delay-feedback"
-            type="range"
-            min="0"
-            max="1"
-            step="0.01"
-            onChange={(e) =>
-              setDelay({
-                ...delay,
-                feedback: e.target.value,
-              })
-            }
-            value={delay.feedback}
-          />
-          <p>{Math.floor(delay.feedback * 100)}</p>
-          </div>
-              <label htmlFor="delay-time">TIME</label>
-              <div class='effect-param'>
-              <input
-              class='effect-param-input'
-                id="delay-time"
-                name="delay-time"
-                type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                onChange={(e) =>
-                  setDelay({
-                    ...delay,
-                    time: e.target.value,
-                  })
-                }
-                value={delay.time}
-              />
-              <p>{Math.floor(delay.time * 100)}</p>
-              </div> */}
+
           </fieldset>
         </Stack>
         <br />
         <br />
+        {/* DelaySection */}
         <Stack
           spacing={2}
           direction="row"
@@ -306,7 +325,7 @@ export default function SynthEngine() {
               />
               <p>{Math.floor(delay.feedback * 100)}</p>
             </div>
-            <label htmlFor="delay-time">TIME</label>
+            <label htmlFor="delay-time">rate</label>
             <div class="effect-param">
               <input
                 class="effect-param-input"
@@ -319,67 +338,17 @@ export default function SynthEngine() {
                 onChange={(e) =>
                   setDelay({
                     ...delay,
-                    time: e.target.value,
+                    rate: e.target.value,
                   })
                 }
-                value={delay.time}
+                value={delay.rate}
               />
-              <p>{Math.floor(delay.time * 100)}</p>
+              <p>{Math.floor(delay.rate * 100)}</p>
             </div>
           </fieldset>
         </Stack>
 
-        <Stack alignItems="center" className="CenterAlign">
-          <FormControl component="fieldset">
-            <FormLabel components="legend" id="engine">
-              Synth Engine
-            </FormLabel>
-
-            <div class="radio-group">
-              <RadioGroup
-                className="generator"
-                aria-label="synth-engine"
-                defaultValue="amSynth"
-                name="radio-buttons-group"
-              >
-                <FormControlLabel
-                  value="amSynth"
-                  control={<Radio onClick={() => setSynthType("amSynth")} />}
-                  label="amSynth"
-                />
-                <FormControlLabel
-                  value="fmSynth"
-                  control={<Radio onClick={() => setSynthType("fmSynth")} />}
-                  label="fmSynth"
-                />
-                <FormControlLabel
-                  value="membraneSynth"
-                  control={
-                    <Radio onClick={() => setSynthType("membraneSynth")} />
-                  }
-                  label="membraneSynth"
-                />
-                <FormControlLabel
-                  value="synth"
-                  control={<Radio onClick={() => setSynthType("synth")} />}
-                  label="synth"
-                />
-              </RadioGroup>
-            </div>
-          </FormControl>
-          <br />
-          <br />
-          <button
-            onClick={() => {
-              setIsPlaying(!isPlaying);
-            }}
-          >
-            {isPlaying ? "Stop" : "Play"}
-          </button>
-          <br />
-          <br />
-          <br />
-        </Stack>
+        
       </div>
     </div>
   );

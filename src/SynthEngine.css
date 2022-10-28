@@ -34,3 +34,12 @@
   font-weight: 300;
   color:antiquewhite;
 }
+
+/* #synth-engine {
+  display: flex;
+} */
+
+.generator {
+  display: flex;
+  flex-direction: row !important;
+}
