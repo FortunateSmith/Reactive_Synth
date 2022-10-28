@@ -83,15 +83,26 @@ export default function SynthEngine() {
   ]);
   const [synthType, setSynthType] = useState("amSynth");
   const [wahAmount, setWahAmount] = useState(0);
+  const [bpm, setBPM] = useState(0);
 
- function setDelayRate(){
+  function tempo(e) {
+    setBPM(e.target.value);
+    console.log(tempo)
+  }
 
+  function setDelayRate(e, bpm) {
+    console.log("set Delay rate", bpm);
+
+    setDelay({
+      ...delay,
+      rate: e.target.value,
+    });
   }
 
   return (
     <div>
       <div class="container">
-        <Song isPlaying={isPlaying} bpm={250}>
+        <Song isPlaying={isPlaying} bpm={bpm}>
           <Track steps={steps} volume={volume}>
             <Instrument
               type={synthType}
@@ -106,11 +117,19 @@ export default function SynthEngine() {
               rate={delay.rate}
               feedback={delay.feedback}
             />
-            <Effect type="tremolo" wet={tremoloAmount.mix} depth={tremoloAmount.depth} />
+            <Effect
+              type="tremolo"
+              wet={tremoloAmount.mix}
+              depth={tremoloAmount.depth}
+            />
           </Track>
         </Song>
-        <Stack alignItems="center" className="CenterAlign" id="synthEngineBlock" >
-          <FormControl component="fieldset" >
+        <Stack
+          alignItems="center"
+          className="CenterAlign"
+          id="synthEngineBlock"
+        >
+          <FormControl component="fieldset">
             <FormLabel components="legend" id="engine">
               Synth Engine
             </FormLabel>
@@ -146,6 +165,27 @@ export default function SynthEngine() {
                 />
               </RadioGroup>
             </div>
+
+            <fieldset id="effect" name="delay" className="params">
+              <h2 htmlFor="delay" id="delay-head">
+                BPM
+              </h2>
+
+              <div class="effect-param">
+                <input
+                  class="effect-param-input"
+                  id="delay-mix"
+                  name="delay-mix"
+                  type="range"
+                  min="60"
+                  max="190"
+                  step="1"
+                  onChange={tempo}
+                  value={bpm}
+                />
+                <p>{Math.floor(bpm)}</p>
+              </div>
+            </fieldset>
           </FormControl>
           <br />
           <br />
@@ -215,7 +255,6 @@ export default function SynthEngine() {
           </Silver>
         </Stack>
 
-
         {/* TremoloSection */}
         <Stack
           spacing={2}
@@ -268,7 +307,6 @@ export default function SynthEngine() {
               />
               <p>{Math.floor(tremoloAmount.depth * 100)}</p>
             </div>
-
           </fieldset>
         </Stack>
         <br />
@@ -335,20 +373,13 @@ export default function SynthEngine() {
                 min="0"
                 max="1"
                 step="0.01"
-                onChange={(e) =>
-                  setDelay({
-                    ...delay,
-                    rate: e.target.value,
-                  })
-                }
+                onChange={setDelayRate}
                 value={delay.rate}
               />
               <p>{Math.floor(delay.rate * 100)}</p>
             </div>
           </fieldset>
         </Stack>
-
-        
       </div>
     </div>
   );
