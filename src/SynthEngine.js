@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Song, Track, Instrument, Effect } from "reactronica";
 import { Silver } from "react-dial-knob";
 import Stack from "@mui/material/Stack";
@@ -12,7 +12,7 @@ import "./SynthEngine.css";
 export default function SynthEngine() {
   const [isPlaying, setIsPlaying] = useState(false);
   const [volume, setVolume] = useState(-10);
-  const [delay, setDelay] = useState({ rate: 0, feedback: 0, mix: 0 });
+  const [delay, setDelay] = useState({ rate: 1.0, feedback: 0, mix: 0 });
   const [distortionAmount, setDistortionAmount] = useState(0);
   const [tremoloAmount, setTremoloAmount] = useState({ mix: 0, depth: 0 });
   const [steps] = useState([
@@ -83,26 +83,29 @@ export default function SynthEngine() {
   ]);
   const [synthType, setSynthType] = useState("amSynth");
   const [wahAmount, setWahAmount] = useState(0);
-  const [bpm, setBPM] = useState(0);
+  const [bpm, setBPM] = useState(60);
 
   function tempo(e) {
     setBPM(e.target.value);
     console.log(tempo)
   }
 
-  function setDelayRate(e, bpm) {
-    console.log("set Delay rate", bpm);
+  function adjustDelayRate(e) {
 
+
+    const ratio = bpm / (e.target.value);
+    console.log("ratio", ratio);
     setDelay({
       ...delay,
-      rate: e.target.value,
+      rate: ratio
     });
+    console.log(delay.rate)
   }
 
   return (
     <div>
-      <div class="container">
-        <Song isPlaying={isPlaying} bpm={bpm}>
+      <div className="container">
+        <Song isPlaying={isPlaying} bpm={bpm * 4}>
           <Track steps={steps} volume={volume}>
             <Instrument
               type={synthType}
@@ -134,7 +137,7 @@ export default function SynthEngine() {
               Synth Engine
             </FormLabel>
 
-            <div class="radio-group" id="synth-engine">
+            <div className="radio-group" id="synth-engine">
               <RadioGroup
                 className="generator"
                 aria-label="synth-engine"
@@ -171,9 +174,9 @@ export default function SynthEngine() {
                 BPM
               </h2>
 
-              <div class="effect-param">
+              <div className="effect-param">
                 <input
-                  class="effect-param-input"
+                  className="effect-param-input"
                   id="delay-mix"
                   name="delay-mix"
                   type="range"
@@ -268,9 +271,9 @@ export default function SynthEngine() {
               Tremolo
             </h2>
             <label htmlFor="tremolo-mix">MIX</label>
-            <div class="effect-param">
+            <div className="effect-param">
               <input
-                class="effect-param-input"
+                className="effect-param-input"
                 id="tremolo-mix"
                 name="tremolo-mix"
                 type="range"
@@ -288,9 +291,9 @@ export default function SynthEngine() {
               <p>{Math.floor(tremoloAmount.mix * 100)}</p>
             </div>
             <label htmlFor="tremolo-mix">DEPTH</label>
-            <div class="effect-param">
+            <div className="effect-param">
               <input
-                class="effect-param-input"
+                className="effect-param-input"
                 id="tremolo-depth"
                 name="tremolo-depth"
                 type="range"
@@ -324,9 +327,9 @@ export default function SynthEngine() {
               Delay
             </h2>
             <label htmlFor="delay-mix">MIX</label>
-            <div class="effect-param">
+            <div className="effect-param">
               <input
-                class="effect-param-input"
+                className="effect-param-input"
                 id="delay-mix"
                 name="delay-mix"
                 type="range"
@@ -344,9 +347,9 @@ export default function SynthEngine() {
               <p>{Math.floor(delay.mix * 100)}</p>
             </div>
             <label htmlFor="delay-feedback">FEEDBACK</label>
-            <div class="effect-param">
+            <div className="effect-param">
               <input
-                class="effect-param-input"
+                className="effect-param-input"
                 id="delay-feedback"
                 name="delay-feedback"
                 type="range"
@@ -364,19 +367,19 @@ export default function SynthEngine() {
               <p>{Math.floor(delay.feedback * 100)}</p>
             </div>
             <label htmlFor="delay-time">rate</label>
-            <div class="effect-param">
+            <div className="effect-param">
               <input
-                class="effect-param-input"
+                className="effect-param-input"
                 id="delay-time"
                 name="delay-time"
                 type="range"
-                min="0"
-                max="1"
-                step="0.01"
-                onChange={setDelayRate}
+                min="1"
+                max="2"
+                step="0.1"
+                onChange={adjustDelayRate}
                 value={delay.rate}
               />
-              <p>{Math.floor(delay.rate * 100)}</p>
+              <p>{delay.rate}</p>
             </div>
           </fieldset>
         </Stack>

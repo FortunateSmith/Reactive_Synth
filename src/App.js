@@ -10,7 +10,7 @@ export default function App() {
   return (
     <div className="App">
       <header className='App-header'>
-        <div class='title'>
+        <div className='title'>
         <h1>Reactive Synth</h1>
         <h4>A Polyphonic JavaScript Sythesizer</h4>
         </div>
